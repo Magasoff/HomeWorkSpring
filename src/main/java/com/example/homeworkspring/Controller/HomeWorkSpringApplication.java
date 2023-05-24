@@ -1,4 +1,4 @@
-package com.example.homeworkspring;
+package com.example.homeworkspring.Controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
