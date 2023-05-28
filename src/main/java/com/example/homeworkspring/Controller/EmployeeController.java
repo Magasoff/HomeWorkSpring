@@ -1,9 +1,7 @@
 package com.example.homeworkspring.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,4 +31,34 @@ public class EmployeeController {
     public List<Employee> getEmployeesWithHighSalary() {
         return employeeService.getEmployeesWithHighSalary();
     }
+    @GetMapping("/")
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
+
+    @GetMapping("/{id}")
+    public Employee getEmployeeById(@PathVariable Long id) {
+        return employeeService.getEmployeeById(id);
+    }
+
+    @PostMapping("/")
+    public Employee createEmployee(@RequestBody Employee employee) {
+        return employeeService.createEmployee(employee);
+    }
+
+    @PutMapping("/{id}")
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        return employeeService.updateEmployee(id, employee);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployee(id);
+    }
+
+    @GetMapping("/salaryHigherThan")
+    public List<Employee> getEmployeesWithSalaryAbove(@RequestParam Integer salary) {
+        return employeeService.getEmployeesWithSalaryAbove(salary);
+    }
+
 }
