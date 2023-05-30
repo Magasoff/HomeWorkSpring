@@ -1,13 +1,10 @@
 package com.example.homeworkspring.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -58,47 +55,32 @@ public class EmployeeService {
         return employeesWithHighSalary;
     }
 
-    public Employee getEmployeeById(Long id) {
-        Optional<Employee> employee = employeeRepository.findById(id);
-        if (employee.isPresent()) {
-            return employee.get();
-        } else {
-            throw new RuntimeException("Employee not found with id " + id);
-        }
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
     }
 
-    public void deleteEmployee(Long id) {
+
+    public Employee getEmployeeById(Long id) {
+        return employeeRepository.findById(id);
+    }
+
+
+    public void createEmployees(List<Employee> employees) {
+        employees.forEach(employeeRepository::save);
+    }
+
+
+    public void updateEmployee(Employee employee) {
+        employeeRepository.update(employee);
+    }
+
+
+    public void deleteEmployeeById(Long id) {
         employeeRepository.deleteById(id);
     }
 
-    public List<Employee> getEmployeesWithSalaryAbove(Integer salary) {
+    public List<Employee> getEmployeesWithSalaryGreaterThan(Integer salary) {
         return employeeRepository.findBySalaryGreaterThan(salary);
-    }
-
-    public Employee createEmployee(Employee employee) {
-        employee.setId(null);
-        employeeRepository.save(employee);
-        return employee;
-    }
-
-    public Employee updateEmployee(Long id, Employee newEmployee) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            employee.setName(newEmployee.getName());
-            employee.setLastName(newEmployee.getLastName());
-            employee.setPosition(newEmployee.getPosition());
-            employee.setSalary(newEmployee.getSalary());
-            employeeRepository.save(employee);
-            return employee;
-        } else {
-            throw new RuntimeException("Employee not found with id " + id);
-        }
-    }
-
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
     }
 }
 

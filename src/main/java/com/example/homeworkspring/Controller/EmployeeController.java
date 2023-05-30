@@ -1,6 +1,7 @@
 package com.example.homeworkspring.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,34 +32,39 @@ public class EmployeeController {
     public List<Employee> getEmployeesWithHighSalary() {
         return employeeService.getEmployeesWithHighSalary();
     }
-    @GetMapping("/")
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
-    }
-
-    @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Long id) {
-        return employeeService.getEmployeeById(id);
-    }
-
     @PostMapping("/")
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeService.createEmployee(employee);
+    public ResponseEntity<Void> createEmployees(@RequestBody List<Employee> employees) {
+        employeeService.createEmployees(employees);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
-        return employeeService.updateEmployee(id, employee);
+    public ResponseEntity<Void> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        if (!id.equals(employee.getId())) {
+            return ResponseEntity.badRequest().build();
+        }
+        employeeService.updateEmployee(employee);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+        Employee employee = employeeService.getEmployeeById(id);
+        if (employee == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(employee);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable Long id) {
-        employeeService.deleteEmployee(id);
+    public ResponseEntity<Void> deleteEmployeeById(@PathVariable Long id) {
+        employeeService.deleteEmployeeById(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/salaryHigherThan")
-    public List<Employee> getEmployeesWithSalaryAbove(@RequestParam Integer salary) {
-        return employeeService.getEmployeesWithSalaryAbove(salary);
+    public ResponseEntity<List<Employee>> getEmployeesWithSalaryGreaterThan(@RequestParam Integer salary) {
+        List<Employee> employees = employeeService.getEmployeesWithSalaryGreaterThan(salary);
+        return ResponseEntity.ok(employees);
     }
-
 }

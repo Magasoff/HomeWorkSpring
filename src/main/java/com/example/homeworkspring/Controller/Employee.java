@@ -1,18 +1,25 @@
 package com.example.homeworkspring.Controller;
 
 public class Employee {
-    private String name;
-    private String lastName;
-    private int salary;
-    private long id;
-    private String position;
 
-    public Employee(String name, String lastName, int salary, long id, String position) {
-        this.name = name;
-        this.lastName = lastName;
-        this.salary = salary;
+    private Long id;
+    private String name;
+    private String position;
+    private Integer salary;
+
+    public Employee(Long id, String name, String position, Integer salary) {
         this.id = id;
+        this.name = name;
         this.position = position;
+        this.salary = salary;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -23,30 +30,6 @@ public class Employee {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getPosition() {
         return position;
     }
@@ -54,9 +37,12 @@ public class Employee {
     public void setPosition(String position) {
         this.position = position;
     }
+
+    public Integer getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
 }
-
-
-
-
-
